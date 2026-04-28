@@ -12,7 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
+
             $table->id();
+
+            $table->foreignId('project_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignId('assigned_to')
+                ->nullable()
+                ->constrained('users');
+
+            $table->string('title');
+
+            $table->string('status')
+                ->default('todo');
+
             $table->timestamps();
         });
     }
