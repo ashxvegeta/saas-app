@@ -46,7 +46,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
+    // Current model = User
+    // Related model = Tenant
+    //So Laravel automatically expects a pivot table between them.
+    // Usually table name becomes:
+    // tenant_user
     public function tenants()
     {
         return $this->belongsToMany(Tenant::class)
