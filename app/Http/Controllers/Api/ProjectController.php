@@ -9,7 +9,7 @@ use App\Models\Project;
 class ProjectController extends Controller
 {
     //
-    public function inex(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name'=>'required|string|max:255',
@@ -17,14 +17,14 @@ class ProjectController extends Controller
 
         $tenant = app('currentTenant');
         $project = Project::create([
-            'tenant_id' => $tenant->tenant_id,
+            'tenant_id' => $tenant->id,
             'name' => $request->name,
         ]);
 
         return response()->json([
             'message' => 'Project created successfully',
             'project' => $project
-        ]);
+        ], 201);
         
     }
 }
