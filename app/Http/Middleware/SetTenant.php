@@ -22,11 +22,11 @@ class SetTenant
         }
         // check if login user belongs to tenant
         $tenant = auth()->user()->tenants()->where('tenant_id', $tenantId)->first();
-        if(!tenant){
+        if(!$tenant){
             return response()->json(['error' => 'Unauthorized'], 403);
         }
         // store globally tenant id for current request
-        app()->instance('tenant_id', $tenantId);
+        app()->instance('currentTenant', $tenant);
 
         return $next($request);
     }
