@@ -12,8 +12,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
-    })
+
+        $middleware->alias([
+            'set.tenant' => App\Http\Middleware\SetTenant::class,
+        ]);
+
+       })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
