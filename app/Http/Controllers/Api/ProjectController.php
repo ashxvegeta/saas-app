@@ -8,6 +8,17 @@ use App\Models\Project;
 
 class ProjectController extends Controller
 {
+
+
+    public function  index(){
+        $tenant = app('currentTenant');
+        $projects = Project::where('tenant_id', $tenant->id)->get();
+
+        return response()->json([
+            'projects' => $projects
+        ]);
+    }
+
     //
     public function store(Request $request)
     {

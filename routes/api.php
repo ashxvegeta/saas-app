@@ -12,5 +12,6 @@ Route::middleware(['auth:sanctum', 'set.tenant'])->group(function () {
       return response()->json([ 'tenant' => app('currentTenant')]);
    });
    Route::post('/projects', [ProjectController::class, 'store']);
+   Route::get('/projects', [ProjectController::class, 'index']);
 });
 
