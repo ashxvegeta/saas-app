@@ -24,7 +24,7 @@ class TaskController extends Controller
             return response()->json(['message' => 'Project not found for this tenant'], 404);
         }
         $task = Task::create([
-            'project_id' =>  $project->id,
+            'project_id' =>  $project->id,      
             'assigned_to' => $request->assigned_to,
             'title' => $request->title,
             'status' => 'todo'
@@ -34,5 +34,21 @@ class TaskController extends Controller
             'message' => 'Task created successfully',
             'task' => $task
         ], 201);
+    }
+
+    public function getTasksByProject($projectId)
+    {
+        $tenant = app('currentTenant');
+        $project = Project::where('id', $projectId)->where('tenant_id', $tenant->id)->first();
+        
+        if(!$project) {
+            return response()->json(['message' => 'Project not found for this tenant'], 404);
+        }
+        $tasks = Task::where('project_id', $projectId)->latest()->get();
+
+        return response()->json([
+            'project' => $project,
+            'tasks' => $tasks
+        ]);
     }
 }

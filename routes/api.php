@@ -15,5 +15,6 @@ Route::middleware(['auth:sanctum', 'set.tenant'])->group(function () {
    Route::post('/projects', [ProjectController::class, 'store']);
    Route::get('/projects', [ProjectController::class, 'index']);
    Route::post('/tasks', [TaskController::class, 'store']);
+   Route::get('/projects/{projectId}/tasks', [TaskController::class, 'getTasksByProject']);
 });
 
