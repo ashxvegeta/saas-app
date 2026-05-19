@@ -51,4 +51,26 @@ class TaskController extends Controller
             'tasks' => $tasks
         ]);
     }
+
+    public function updateStatus(Request $request , $taskId)
+    {
+       
+       $request->validate([ 'status' => 'required|in:todo,in_progress,done']);
+       $tenant = app('currentTenant');
+       $task = Task::where('id',$taskId)->whereHas('project',function($query) use ($tenant){
+              $query->where('tenant_id', $tenant->id);
+       })->first();
+       
+
+       if(!$task) {
+        return response()->json(['message' => 'Task not found for this tenant'], 404);
+       }
+       $task->update(['status' => $request->status]);
+       
+        return response()->json([
+          'message' => 'Task status updated successfully',
+          'task' => $task
+         ]);  
+    }
+    
 }
