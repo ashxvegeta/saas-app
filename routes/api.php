@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\TenantMemberController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -18,5 +19,6 @@ Route::middleware(['auth:sanctum', 'set.tenant'])->group(function () {
    Route::get('/projects/{projectId}/tasks', [TaskController::class, 'getTasksByProject']);
    Route::patch('/tasks/{taskId}/status', [TaskController::class, 'updateStatus']);
    Route::delete('/tasks/{taskId}', [TaskController::class, 'destroy']);
+   Route::post('/tenant/members', [TenantMemberController::class, 'addMember']);
 });
 
