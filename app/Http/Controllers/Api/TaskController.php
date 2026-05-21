@@ -72,5 +72,18 @@ class TaskController extends Controller
           'task' => $task
          ]);  
     }
+
+
+    public function destroy($taskid){
+       $tenant = app('currentTenant');
+        $task = Task::where('id', $taskid)->whereHas('project', function($query) use ($tenant){
+            $query->where('tenant_id', $tenant->id);
+        })->first();
+        if(!$task) {
+            return response()->json(['message' => 'Task not found for this tenant'], 404);
+        }
+        $task->delete();
+        return response()->json(['message' => 'Task deleted successfully']);
+    }
     
 }
