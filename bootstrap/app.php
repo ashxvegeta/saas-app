@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'set.tenant' => App\Http\Middleware\SetTenant::class,
+            'role' => App\Http\Middleware\CheckRole::class,
         ]);
 
        })

@@ -19,6 +19,6 @@ Route::middleware(['auth:sanctum', 'set.tenant'])->group(function () {
    Route::get('/projects/{projectId}/tasks', [TaskController::class, 'getTasksByProject']);
    Route::patch('/tasks/{taskId}/status', [TaskController::class, 'updateStatus']);
    Route::delete('/tasks/{taskId}', [TaskController::class, 'destroy']);
-   Route::post('/tenant/members', [TenantMemberController::class, 'addMember']);
+   Route::post('/tenant/members', [TenantMemberController::class, 'addMember'])->middleware('role:owner');
 });
 
